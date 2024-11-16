@@ -1,4 +1,5 @@
-﻿using RestaurantReservation.Db.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
@@ -25,5 +26,12 @@ public class CustomerRepository(RestaurantReservationDbContext context)
             context.Customers.Remove(customer);
             await context.SaveChangesAsync();
         }
+    }
+
+    public async Task<List<Customer>> GetCustomersHaveReservationsWithPartySizeGreaterThanAsync(int partySize)
+    {
+        return await context.Customers
+            .FromSqlInterpolated($"EXEC dbo.FindCustomersWithReservationsPartySizeGreaterThan @pSize = {partySize};")
+            .ToListAsync();
     }
 }

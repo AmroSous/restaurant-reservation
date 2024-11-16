@@ -27,8 +27,9 @@ static string ToJSON(object obj)
 OrderRepository orderRepository = new(context);
 EmployeeRepository employeeRepository = new(context);
 ReservationRepository reservationRepository = new(context);
+CustomerRepository customerRepository = new(context);
 
 // test
 
-var result = await employeeRepository.CalculateAverageOrderAmountAsync(9);
+var result = await customerRepository.GetCustomersHaveReservationsWithPartySizeGreaterThanAsync(4);
 Console.WriteLine(ToJSON(result));

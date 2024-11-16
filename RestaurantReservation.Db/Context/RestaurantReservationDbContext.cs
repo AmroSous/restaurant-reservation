@@ -16,8 +16,10 @@ public class RestaurantReservationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-            "Data Source=AMRO;Initial Catalog=RestaurantReservationCore;User Id=sa;Password=12345;TrustServerCertificate=True;Encrypt=False;");
+        optionsBuilder
+            .UseSqlServer(
+                "Data Source=AMRO;Initial Catalog=RestaurantReservationCore;User Id=sa;Password=12345;TrustServerCertificate=True;Encrypt=False;")
+            .LogTo(Console.WriteLine);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
