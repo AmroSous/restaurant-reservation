@@ -28,8 +28,11 @@ OrderRepository orderRepository = new(context);
 EmployeeRepository employeeRepository = new(context);
 ReservationRepository reservationRepository = new(context);
 CustomerRepository customerRepository = new(context);
+RestaurantRepository restaurantRepository = new(context);
 
 // test
 
-var result = await customerRepository.GetCustomersHaveReservationsWithPartySizeGreaterThanAsync(4);
+var result = await restaurantRepository.GetRestaurantRevenueAsync(1);
+Console.WriteLine("-----------------------------");
 Console.WriteLine(ToJSON(result));
+Console.WriteLine("-----------------------------");

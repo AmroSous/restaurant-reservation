@@ -13,6 +13,11 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Table> Tables { get; set; }
+    public DbSet<ReservationsFullInfo> ReservationsFullInfo { get; set; }
+    public DbSet<EmployeeToRestaurant> EmployeeToRestaurant { get; set; }
+
+    public decimal CalculateRestaurantRevenue(int restaurantId)
+        => throw new NotSupportedException();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -24,6 +29,15 @@ public class RestaurantReservationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // views mapping 
+        modelBuilder.Entity<ReservationsFullInfo>().HasNoKey().ToView(nameof(ReservationsFullInfo));
+        modelBuilder.Entity<EmployeeToRestaurant>().HasNoKey().ToView(nameof(EmployeeToRestaurant));
+
+        // function mapping 
+        modelBuilder.HasDbFunction(() => CalculateRestaurantRevenue(default))
+            .HasName(nameof(CalculateRestaurantRevenue))
+            .HasSchema("dbo");
+
         // resolve cyclic cascading paths 
         modelBuilder.Entity<Reservation>()
             .HasOne(r => r.Table)

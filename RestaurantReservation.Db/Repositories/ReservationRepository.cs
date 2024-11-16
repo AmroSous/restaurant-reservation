@@ -44,4 +44,9 @@ public class ReservationRepository(RestaurantReservationDbContext context)
 
         return orderedMenuItems;
     }
+
+    public async Task<List<ReservationsFullInfo>> GetReservationsWithRestaurantAndCustomerInfoAsync()
+    {
+        return await context.ReservationsFullInfo.ToListAsync();
+    }
 }

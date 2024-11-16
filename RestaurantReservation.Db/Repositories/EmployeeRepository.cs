@@ -38,4 +38,9 @@ public class EmployeeRepository(RestaurantReservationDbContext context)
         return await context.Orders.Where(o => o.EmployeeId == employeeId)
             .Select(o => o.TotalAmount).DefaultIfEmpty().AverageAsync();
     }
+
+    public async Task<List<EmployeeToRestaurant>> GetEmployeesWithRestaurantInfoAsync()
+    {
+        return await context.EmployeeToRestaurant.ToListAsync();
+    }
 }
